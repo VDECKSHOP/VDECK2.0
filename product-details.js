@@ -31,18 +31,22 @@ document.addEventListener("DOMContentLoaded", async function () {
         document.getElementById("product-price").textContent = `₱${product.price.toFixed(2)}`;
         document.getElementById("product-description").textContent = product.description || "No description available.";
 
-        // ✅ Set Main Product Image (Fix: Use Absolute Path)
+        // ✅ Set Main Product Image (Fix: Handle Cloudinary & Local Uploads)
         const mainImage = document.getElementById("main-product-image");
-        mainImage.src = `${API_BASE_URL}${product.images[0]}`;
+
+        // Check if the image is a full URL (Cloudinary, etc.)
+        const getImageUrl = (img) => img.startsWith("http") ? img : `${API_BASE_URL}${img}`;
+
+        mainImage.src = getImageUrl(product.images[0]);
         mainImage.onerror = () => (mainImage.src = "placeholder.jpg"); // ✅ This must exist in the project folder
 
-        // ✅ Generate Thumbnails for All Images (Fix: Use Absolute Paths)
+        // ✅ Generate Thumbnails for All Images (Fix: Handle Cloudinary & Local Uploads)
         const thumbnailsContainer = document.getElementById("thumbnails");
         thumbnailsContainer.innerHTML = "";
 
         product.images.forEach((img, index) => {
             const imgElement = document.createElement("img");
-            imgElement.src = `${API_BASE_URL}${img}`;
+            imgElement.src = getImageUrl(img);
             imgElement.classList.add("thumbnail");
             imgElement.alt = `Thumbnail ${index + 1}`;
             imgElement.onerror = () => (imgElement.src = "placeholder.jpg"); // ✅ Make sure this image exists
@@ -51,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             imgElement.onclick = () => {
                 mainImage.style.opacity = 0;
                 setTimeout(() => {
-                    mainImage.src = `${API_BASE_URL}${img}`;
+                    mainImage.src = getImageUrl(img);
                     mainImage.style.opacity = 1;
                 }, 200);
             };
@@ -106,4 +110,5 @@ function addToCartFromDetails() {
     localStorage.setItem("cart", JSON.stringify(cart));
     alert("✅ Product added to cart!");
 }
+
 

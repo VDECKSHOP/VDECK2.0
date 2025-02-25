@@ -21,8 +21,7 @@ async function loadProducts() {
     }
 }
 
-
-// ✅ Render products dynamically
+// ✅ Render products dynamically with Cloudinary image fix
 function renderProducts(products) {
     const playingCardsContainer = document.getElementById("playing-cards");
     const pokerChipsContainer = document.getElementById("poker-chips");
@@ -37,13 +36,16 @@ function renderProducts(products) {
     products.forEach((product) => {
         const category = product.category ? product.category.toLowerCase() : "";
 
+        // ✅ Fix Cloudinary image display
+        const imageUrl = product.images?.[0]?.startsWith("http") 
+            ? product.images[0] 
+            : `https://vdeck.onrender.com${product.images?.[0]}`;
+
         const productHTML = `
         <div class="product">
-           <img src="https://vdeck.onrender.com${product.images?.[0]}" 
-     alt="${product.name}" 
-     onerror="this.src='placeholder.jpg'">
-
-
+            <img src="${imageUrl}" 
+                 alt="${product.name}" 
+                 onerror="this.src='placeholder.jpg'">
             <h3>${product.name}</h3>
             <p>₱${product.price.toFixed(2)}</p>
             <div class="button-container">
@@ -114,7 +116,7 @@ function renderCart() {
     orderTotalInput.value = total.toFixed(2);
 }
 
-// ✅ Remove Item from Cart (Fix applied)
+// ✅ Remove Item from Cart
 window.removeFromCart = (index) => {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -126,7 +128,7 @@ window.removeFromCart = (index) => {
     }
 };
 
-// ✅ Handle Order Submission (Fix: Prevent Redirection & Fix JSON Format)
+// ✅ Handle Order Submission
 document.getElementById("order-form").addEventListener("submit", async function (e) {
     e.preventDefault();
 
@@ -156,11 +158,10 @@ document.getElementById("order-form").addEventListener("submit", async function 
     try {
         const API_BASE_URL = "https://vdeck.onrender.com"; // ✅ Use Render backend
 
-const response = await fetch(`${API_BASE_URL}/api/orders`, { // ✅ Updated API URL
-    method: "POST",
-    body: formData,
-});
-
+        const response = await fetch(`${API_BASE_URL}/api/orders`, { // ✅ Updated API URL
+            method: "POST",
+            body: formData,
+        });
 
         const result = await response.json();
         if (!response.ok) throw new Error(result.error || "❌ Failed to place order.");

@@ -6,10 +6,11 @@ const productSchema = new mongoose.Schema({
     price: { type: Number, required: true },
     category: { type: String, required: true },
     description: { type: String, default: "" },
-    images: [String], // ✅ Supports multiple images
+    images: [String], // ✅ Stores Cloudinary URLs
 }, { timestamps: true }); // ✅ Adds createdAt & updatedAt automatically
 
 // ✅ Prevent OverwriteModelError
 const Product = mongoose.models.Product || mongoose.model("Product", productSchema);
 
 module.exports = Product;
+

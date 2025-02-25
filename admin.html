@@ -10,20 +10,17 @@
 
     <div class="admin-container">
         <!-- ✅ Sidebar -->
-		
-     <!-- ✅ Admin Sidebar -->
-<aside class="sidebar">
-    <h2>Admin Panel</h2>
-    
-    <!-- 📋 View Orders Button (Added above Logout) -->
-    <button onclick="location.href='view-order.html'" class="view-orders-btn">
-        📋 View Orders
-    </button>
+        <aside class="sidebar">
+            <h2>Admin Panel</h2>
+            
+            <!-- 📋 View Orders Button -->
+            <button onclick="location.href='view-order.html'" class="view-orders-btn">
+                📋 View Orders
+            </button>
 
-    <!-- 🚪 Logout Button -->
-    <button id="logout-btn">🚪 Logout</button>
-</aside>
-
+            <!-- 🚪 Logout Button -->
+            <button id="logout-btn">🚪 Logout</button>
+        </aside>
 
         <!-- ✅ Main Content -->
         <main class="admin-content">
@@ -56,26 +53,41 @@
                     
                     <label>Additional Images (Max 5)</label>
                     <div class="image-upload-container">
-                        <input type="file" class="additional-image" accept="image/*">
-                        <input type="file" class="additional-image" accept="image/*">
-                        <input type="file" class="additional-image" accept="image/*">
-                        <input type="file" class="additional-image" accept="image/*">
-                        <input type="file" class="additional-image" accept="image/*">
+                        <input type="file" class="additional-image" accept="image/*" multiple>
                     </div>
+					<div class="image-upload-container">
+                        <input type="file" class="additional-image" accept="image/*" multiple>
+                    </div>
+					<div class="image-upload-container">
+                        <input type="file" class="additional-image" accept="image/*" multiple>
+                    </div>
+					<div class="image-upload-container">
+                        <input type="file" class="additional-image" accept="image/*" multiple>
+                    </div>
+		
 
-                    <button type="submit" class="btn-save">Save Product</button>
+                    <button type="submit" class="btn-save">💾 Save Product</button>
                 </form>
             </div>
 
             <!-- ✅ Product List -->
             <div class="product-list">
                 <h2>All Products</h2>
-                <ul id="product-list"></ul>
+                <div id="product-list"></div>
             </div>
         </main>
     </div>
 
     <script src="admin.js"></script>
+    <script>
+        // ✅ Logout Function
+        document.getElementById("logout-btn").addEventListener("click", function () {
+            if (confirm("Are you sure you want to log out?")) {
+                localStorage.removeItem("admin-token"); // ✅ Clear stored token
+                window.location.href = "admin-login.html"; // Redirect to login page
+            }
+        });
+    </script>
 </body>
 </html>
 

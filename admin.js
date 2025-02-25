@@ -7,12 +7,14 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    // ✔️ Fetch products from the API and display them
+    const API_BASE_URL = "https://vdeck.onrender.com"; // ✅ Use Render backend
+    const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dpf2qgois/upload";
+    const CLOUDINARY_UPLOAD_PRESET = "vdeck_preset"; // ✅ Make sure this exists in Cloudinary
+
+    // ✅ Fetch products from the API and display them
     async function fetchProducts() {
         try {
-            const API_BASE_URL = "https://vdeck.onrender.com"; // ✅ Use Render backend
-
-            const response = await fetch(`${API_BASE_URL}/api/products`); // ✅ Updated API URL
+            const response = await fetch(`${API_BASE_URL}/api/products`);
             if (!response.ok) throw new Error("❌ Failed to fetch products.");
 
             const products = await response.json();
@@ -23,16 +25,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // ✔️ Render products dynamically
+    // ✅ Render products dynamically
     function renderProducts(products) {
         productContainer.innerHTML = "";
         products.forEach((product) => {
             const li = document.createElement("li");
             li.innerHTML = `
-                <img src="https://vdeck.onrender.com${product.images?.[0]}" 
-     alt="${product.name}" 
-     width="100" 
-     onerror="this.src='placeholder.jpg'">
+                <img src="${product.images?.[0] || 'placeholder.jpg'}" 
+                     alt="${product.name}" 
+                     width="100" 
+                     onerror="this.src='placeholder.jpg'">
 
                 <div>
                     <strong>${product.name}</strong> - ₱${product.price} (${product.category})
@@ -56,23 +58,21 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ✔️ Delete Product
+    // ✅ Delete Product
     window.deleteProduct = async (id) => {
-        console.log("🛠️ Deleting Product ID:", id);
+        console.log("🛠 Deleting Product ID:", id);
 
         if (!confirm("Are you sure you want to delete this product?")) return;
 
         try {
-            const API_BASE_URL = "https://vdeck.onrender.com"; // ✅ Use Render backend
-
-            const response = await fetch(`${API_BASE_URL}/api/products/${id}`, { // ✅ Updated API URL
+            const response = await fetch(`${API_BASE_URL}/api/products/${id}`, {
                 method: "DELETE",
                 headers: { "Accept": "application/json" }
             });
 
             if (!response.ok) throw new Error("❌ Failed to delete product.");
 
-            alert("✔️ Product deleted successfully!");
+            alert("✅ Product deleted successfully!");
             fetchProducts();
         } catch (error) {
             console.error("❌ Error deleting product:", error);
@@ -80,7 +80,32 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // ✔️ Handle Product Submission
+    // ✅ Upload Image to Cloudinary
+    async function uploadImageToCloudinary(file) {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+
+        try {
+            const response = await fetch(CLOUDINARY_URL, {
+                method: "POST",
+                body: formData,
+            });
+
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.error?.message || "Cloudinary upload failed");
+            }
+
+            console.log("📸 Cloudinary response:", data);
+            return data.secure_url; // ✅ Return the uploaded image URL
+        } catch (error) {
+            console.error("❌ Image upload error:", error);
+            return null; // ✅ Return null on failure
+        }
+    }
+
+    // ✅ Handle Product Submission
     productForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
@@ -96,38 +121,60 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        const formData = new FormData();
-        formData.append("name", name);
-        formData.append("price", price);
-        formData.append("description", description);
-        formData.append("category", category);
-        formData.append("images", mainImageFile);
+        let imageUrls = [];
 
-        // ✔️ Append Additional Images (If Available)
-        additionalImages.forEach((input) => {
-            if (input.files.length > 0) {
-                formData.append("images", input.files[0]);
-            }
-        });
-
-        try {
-            const API_BASE_URL = "https://vdeck.onrender.com"; // ✅ Use Render backend
-
-            const response = await fetch(`${API_BASE_URL}/api/products`, { // ✅ Updated API URL
-                method: "POST",
-                body: formData,
-            });
-
-            const result = await response.json();
-            if (!response.ok) throw new Error(result.error || "❌ Failed to save product.");
-
-            alert("✔️ Product saved successfully!");
-            productForm.reset();
-            fetchProducts();
-        } catch (error) {
-            console.error("❌ Error saving product:", error);
-            alert("❌ Failed to save product.");
+        // ✅ Upload Main Image
+        const mainImageUrl = await uploadImageToCloudinary(mainImageFile);
+        if (!mainImageUrl) {
+            alert("❌ Failed to upload main image.");
+            return;
         }
+        imageUrls.push(mainImageUrl);
+
+        // ✅ Upload Additional Images
+        for (const input of additionalImages) {
+            if (input.files.length > 0) {
+                const uploadedUrl = await uploadImageToCloudinary(input.files[0]);
+                if (uploadedUrl) imageUrls.push(uploadedUrl);
+            }
+        }
+
+const productData = {
+    name,
+    price,
+    description,
+    category,
+    images: imageUrls, // Ensure it's an array
+};
+
+console.log("📡 Sending Product Data:", JSON.stringify(productData, null, 2)); // ✅ Log data before sending
+
+try {
+    const response = await fetch(`${API_BASE_URL}/api/products`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify(productData),
+    });
+
+    const result = await response.json();
+    console.log("✅ Backend Response:", result);
+
+    if (!response.ok) {
+        console.error("❌ Backend Error:", result);
+        throw new Error(result.error || "❌ Failed to save product.");
+    }
+
+    alert("✅ Product saved successfully!");
+    productForm.reset();
+    fetchProducts();
+} catch (error) {
+    console.error("❌ Error saving product:", error);
+    alert("❌ Failed to save product.");
+}
+
     });
 
     fetchProducts();
