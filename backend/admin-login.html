@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="admin-login.css">
+</head>
+<body>
+
+    <div class="admin-login-container">
+        <!-- ✅ Added Logo -->
+        <div class="logo-container">
+            <img src= "logo 1.PNG" alt="VDECK Logo" class="logo-img">
+            <span class="logo-text">VDECK</span>
+        </div>
+
+        <h2>🔒 Admin Login</h2>
+        <form id="login-form">
+            <div class="input-group">
+                <label for="userid">Username</label>
+                <input type="text" id="userid" placeholder="Enter username" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter password" required>
+            </div>
+
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+
+        <p class="error-message" id="error-message">❌ Invalid username or password</p>
+    </div>
+
+    <script src="admin-auth.js"></script>
+</body>
+</html>
+
+
+
+

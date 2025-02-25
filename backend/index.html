@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VDECK Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="logo 1.PNG" alt="VDECK Logo" class="logo-img">
+            <span class="logo-text">VDECK</span>
+            <a href="admin-login.html" class="admin-login">Admin Panel</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#products">Playing Cards</a></li>
+            <li><a href="#order-form">Order Now</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="hero">
+        <video autoplay muted loop class="hero-video">
+            <source src= "CINEMATIC POKER VIDEO - B ROLL.mp4" type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <h1>Playing Cards for You</h1>
+            <p>Welcome to your premium card shop!</p>
+            <a href="#products" class="btn">Shop Now</a>
+        </div>
+    </header>
+
+    <!-- FEATURED PRODUCTS -->
+  <section id="products">
+    <h2>Our Products</h2>
+    
+    <!-- Playing Cards -->
+    <div class="category-container">
+        <h3>Playing Cards</h3>
+        <div class="slider-container">
+            <button class="prev-btn">&#10094;</button>
+            <div class="slider-wrapper" id="playing-cards">
+                <!-- Products will be dynamically inserted here -->
+            </div>
+            <button class="next-btn">&#10095;</button>
+        </div>
+    </div>
+
+    <!-- Poker Chips -->
+    <div class="category-container">
+        <h3>Poker Chips</h3>
+        <div class="slider-container">
+            <button class="prev-btn">&#10094;</button>
+            <div class="slider-wrapper" id="poker-chips">
+                <!-- Products will be dynamically inserted here -->
+            </div>
+            <button class="next-btn">&#10095;</button>
+        </div>
+    </div>
+
+    <!-- Accessories -->
+    <div class="category-container">
+        <h3>Accessories</h3>
+        <div class="slider-container">
+            <button class="prev-btn">&#10094;</button>
+            <div class="slider-wrapper" id="accessories">
+                <!-- Products will be dynamically inserted here -->
+            </div>
+            <button class="next-btn">&#10095;</button>
+        </div>
+    </div>
+</section>
+
+    <!-- CART, IMAGE & ORDER FORM -->
+<div class="cart-order-container">
+    <!-- 🛒 Your Cart -->
+    <div class="cart-section">
+        <h2>🛒 Your Cart</h2>
+        <ul id="cart-items"></ul>
+        <p><strong>Total: ₱<span id="cart-total">0</span></strong></p>
+        <span id="cart-count" class="cart-counter">0</span>
+    </div>
+
+    <!-- 🖼️ Middle Image (Same Size as Cart & Order Sections) -->
+    <div class="middle-image">
+        <img src="e361aef4-4865-4d02-9a24-1c72f681700f.jpg" alt="Middle Banner">
+    </div>
+
+    <!-- 📦 Complete Your Order -->
+    <div class="order-form">
+        <h2>📦 Complete Your Order</h2>
+        <form id="order-form">
+            <input type="text" id="fullname" name="fullname" placeholder="Full Name" required>
+            <input type="text" id="gcash" name="gcash" placeholder="GCash Number" required>
+            <input type="text" id="address" name="address" placeholder="Complete Address" required>
+            <textarea id="selected-product" name="items" placeholder="Items in Cart" readonly></textarea>
+            <input type="text" id="order-total" name="total" placeholder="Total Price" readonly>
+            <input type="file" id="payment-proof" name="paymentProof" accept="image/*" required>
+            <button type="submit">Submit Order</button>
+        </form>
+    </div>
+</div>
+
+
+    <script src="script.js"></script>
+	
+	<footer class="footer">
+    <div class="contact-us">
+        <h3>Contact Us</h3>
+        <p>Email: vdecks62@gmail.com</p>
+		<p>       lyracampos85@gmail.com</p>
+        <p>Phone: 09491188041</p>
+		<p>09155727512</p>
+        <p>65 De Jesus Street Barangay San Antonio Quezon City</p>
+    </div>
+    <div class="copyright">
+        Copyright © 2025 VDECK SHOP
+    </div>
+</footer>
+
+</body>
+</html>
+
+
+

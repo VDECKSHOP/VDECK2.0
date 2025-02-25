@@ -16,8 +16,15 @@ const Order = require("./order");
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// ✅ Middleware
-app.use(cors());
+// ✅ CORS Middleware (Allow Requests from Vercel Frontend)
+app.use(
+  cors({
+    origin: "https://vdeckshop.vercel.app", // ✅ Allow your frontend
+    methods: "GET,POST,PUT,DELETE",
+    allowedHeaders: "Content-Type,Authorization",
+  })
+);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -138,4 +145,5 @@ app.use((err, req, res, next) => {
 
 // ✅ Start Server
 app.listen(PORT, () => console.log(`🚀 Server running at http://localhost:${PORT}`));
+
 

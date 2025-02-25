@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="product-detail.css">
+</head>
+<body>
+
+    <!-- Product Details Container -->
+    <div class="product-details-container">
+        <!-- Product Images -->
+        <div class="product-images">
+            <img id="main-product-image" src="placeholder.jpg" alt="Main Product Image">
+            <div class="thumbnail-images" id="thumbnails"></div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="product-info">
+            <h1 id="product-name"></h1>
+            <p class="price">₱<span id="product-price"></span></p>
+            <div class="rating">
+                ⭐⭐⭐⭐⭐ (5.0)
+            </div>
+            <div class="quantity-controls">
+                <label for="quantity">Quantity:</label>
+                <button onclick="decrementQuantity()">-</button>
+                <input type="number" id="quantity" value="1" min="1">
+                <button onclick="incrementQuantity()">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="addToCartFromDetails()">Add to Cart</button>
+            <div class="product-description">
+                <h3>Product Description</h3>
+                <p id="product-description"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="product-details.js"></script>
+</body>
+</html> 

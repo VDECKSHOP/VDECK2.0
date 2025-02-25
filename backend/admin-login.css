@@ -1,0 +1,111 @@
+/* ✅ General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* ✅ Admin Login Container */
+.admin-login-container {
+    background: white;
+    padding: 30px;
+    width: 350px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-top: 5px solid #A91D3A; /* Matches your main red theme */
+}
+
+/* ✅ Logo Styling (Same as Navbar) */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.logo-img {
+    height: 50px;
+    margin-right: 10px;
+}
+
+.logo-text {
+    font-size: 24px;
+    color: #A91D3A;
+    font-weight: bold;
+}
+
+/* ✅ Login Title */
+.admin-login-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+}
+
+/* ✅ Input Fields */
+.input-group {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border 0.3s ease-in-out;
+}
+
+.input-group input:focus {
+    border-color: #A91D3A;
+    box-shadow: 0 0 5px rgba(169, 29, 58, 0.5);
+    outline: none;
+}
+
+/* ✅ Login Button */
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: #A91D3A; /* Matches your theme */
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.login-btn:hover {
+    background: #8c162b; /* Darker red on hover */
+}
+
+/* ✅ Error Message */
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 15px;
+    display: none; /* Hidden by default */
+}
+
+/* ✅ Responsive Design */
+@media (max-width: 400px) {
+    .admin-login-container {
+        width: 90%;
+        padding: 20px;
+    }
+}
+
+

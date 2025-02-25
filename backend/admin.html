@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="admin-style.css">
+</head>
+<body>
+
+    <div class="admin-container">
+        <!-- ✅ Sidebar -->
+        <aside class="sidebar">
+            <h2>Admin Panel</h2>
+            
+            <!-- 📋 View Orders Button -->
+            <button onclick="location.href='view-order.html'" class="view-orders-btn">
+                📋 View Orders
+            </button>
+
+            <!-- 🚪 Logout Button -->
+            <button id="logout-btn">🚪 Logout</button>
+        </aside>
+
+        <!-- ✅ Main Content -->
+        <main class="admin-content">
+            <h1>Manage Products</h1>
+
+            <!-- ✅ Product Form -->
+            <div class="form-container">
+                <h2>Add / Edit Product</h2>
+                <form id="product-form">
+                    <input type="hidden" id="product-id">
+                    
+                    <label>Product Name</label>
+                    <input type="text" id="product-name" required>
+                    
+                    <label>Price</label>
+                    <input type="number" id="product-price" required>
+
+                    <label>Product Description</label>
+                    <textarea id="product-description" required></textarea>
+
+                    <label>Category</label>
+                    <select id="product-category" required>
+                        <option value="playing-cards">Playing Cards</option>
+                        <option value="poker-chips">Poker Chips</option>
+                        <option value="accessories">Accessories</option>
+                    </select>
+
+                    <label>Main Image</label>
+                    <input type="file" id="product-image" accept="image/*" required>
+                    
+                    <label>Additional Images (Max 5)</label>
+                    <div class="image-upload-container">
+                        <input type="file" class="additional-image" accept="image/*" multiple>
+                    </div>
+					<div class="image-upload-container">
+                        <input type="file" class="additional-image" accept="image/*" multiple>
+                    </div>
+					<div class="image-upload-container">
+                        <input type="file" class="additional-image" accept="image/*" multiple>
+                    </div>
+					<div class="image-upload-container">
+                        <input type="file" class="additional-image" accept="image/*" multiple>
+                    </div>
+		
+
+                    <button type="submit" class="btn-save">💾 Save Product</button>
+                </form>
+            </div>
+
+            <!-- ✅ Product List -->
+            <div class="product-list">
+                <h2>All Products</h2>
+                <div id="product-list"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="admin.js"></script>
+    <script>
+        // ✅ Logout Function
+        document.getElementById("logout-btn").addEventListener("click", function () {
+            if (confirm("Are you sure you want to log out?")) {
+                localStorage.removeItem("admin-token"); // ✅ Clear stored token
+                window.location.href = "admin-login.html"; // Redirect to login page
+            }
+        });
+    </script>
+</body>
+</html>
+
